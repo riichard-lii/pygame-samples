@@ -32,6 +32,7 @@ class Player(object):
         The location of the player is with respect to the map he is in; not the
         display screen.
         """
+        self.loc = location
         self.speed = speed
         self.image = image
         self.mask = pg.mask.from_surface(self.image)
@@ -43,7 +44,9 @@ class Player(object):
         collision detection methods and adjust the vector appropriately.
         """
         move = self.check_keys(keys)
+        self.loc = [self.loc[0] + move[0], self.loc[1] + move[1]]
         self.check_collisions(move, level_mask)
+        print(self.loc)
 
     def check_keys(self, keys):
         """Find the players movement vector from key presses."""
@@ -133,7 +136,7 @@ class Control(object):
         self.screen = pg.display.get_surface()
         self.screen_rect = self.screen.get_rect()
         self.clock = pg.time.Clock()
-        self.fps = 60.0
+        self.fps = 5.0
         self.keys = pg.key.get_pressed()
         self.done = False
         self.player = Player(PLAY_IMAGE, (0,0), 7)
